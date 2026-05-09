@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umalaya – Handcrafted with Love</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C49A45;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --cream: #FAF6F0;
+    --cream-2: #F2EBE0;
+    --maroon: #6B1A2A;
+    --maroon-light: #9B3548;
+    --maroon-dark: #3D0A14;
+    --text-dark: #1A1009;
+    --text-mid: #5A4535;
+    --text-light: #9A8070;
+    --white: #FFFDF9;
+    --border: rgba(196,154,69,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ─────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 70px;
+    background: rgba(250,246,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 500; letter-spacing: 3px;
+    color: var(--maroon);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; font-weight: 400; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--text-mid);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--maroon); }
+  .nav-cta {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    padding: 9px 22px; border: 1px solid var(--gold);
+    background: transparent; color: var(--gold-dark);
+    cursor: pointer; font-family: 'Jost', sans-serif;
+    transition: all 0.25s; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--white); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 1px; background: var(--maroon); transition: all 0.3s; }
+
+  /* ── DROPDOWN ─────────────────────────────────────── */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-trigger { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+  .nav-chevron { font-size: 10px; display: inline-block; transition: transform 0.25s; line-height: 1; }
+  .nav-dropdown:hover .nav-chevron { transform: rotate(180deg); }
+
+  .dropdown-menu {
+    position: absolute; top: calc(100% + 22px); left: 50%;
+    min-width: 680px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    box-shadow: 0 24px 60px rgba(61,10,20,0.12);
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateX(-50%) translateY(8px);
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+    z-index: 200;
+  }
+  .nav-dropdown:hover .dropdown-menu {
+    opacity: 1; visibility: visible; pointer-events: all;
+    transform: translateX(-50%) translateY(0);
+  }
+  .dropdown-inner { display: flex; gap: 0; padding: 28px 8px; }
+  .dropdown-col { flex: 1; padding: 0 24px; display: flex; flex-direction: column; gap: 4px; }
+  .dropdown-heading {
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-dark); font-weight: 500;
+    margin-bottom: 12px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dropdown-divider { width: 1px; background: var(--border); margin: 8px 0; flex-shrink: 0; }
+  .dropdown-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 10px; border-radius: 4px;
+    text-decoration: none; transition: background 0.15s; color: inherit;
+  }
+  .dropdown-item:hover { background: var(--cream); }
+  .dropdown-item:hover .di-name { color: var(--maroon); }
+  .di-icon { font-size: 20px; flex-shrink: 0; width: 28px; text-align: center; }
+  .di-text { display: flex; flex-direction: column; gap: 1px; }
+  .di-name { font-size: 13px; font-weight: 500; color: var(--text-dark); transition: color 0.15s; line-height: 1.3; }
+  .di-sub { font-size: 11px; color: var(--text-light); font-weight: 300; }
+  .dropdown-item-cta .di-name { color: var(--maroon); }
+  .dropdown-menu::before {
+    content: ''; position: absolute;
+    top: -7px; left: 50%; 
+    width: 12px; height: 12px;
+    background: var(--white);
+    border-left: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  /* ── HERO ─────────────────────────────────────────── */
+  .hero {
+    min-height: 100vh; padding-top: 70px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 5vw 80px 8vw;
+    background: var(--white);
+  }
+  .hero-tag {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-tag::before {
+    content: ''; width: 40px; height: 1px; background: var(--gold);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 7vw, 88px);
+    font-weight: 300; line-height: 1.05;
+    color: var(--maroon-dark);
+    margin-bottom: 8px;
+  }
+  .hero-title em {
+    font-style: italic; color: var(--gold-dark);
+  }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 300; font-style: italic;
+    color: var(--text-mid); margin-bottom: 36px; line-height: 1.4;
+  }
+  .hero-desc {
+    font-size: 14px; line-height: 1.9; color: var(--text-mid);
+    max-width: 420px; margin-bottom: 48px;
+    font-weight: 300;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 14px 36px; background: var(--maroon);
+    color: var(--cream); font-family: 'Jost', sans-serif;
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    border: none; cursor: pointer; transition: all 0.25s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--maroon-dark); }
+  .btn-outline {
+    padding: 13px 36px; background: transparent;
+    color: var(--maroon); font-family: 'Jost', sans-serif;
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    border: 1px solid var(--maroon); cursor: pointer; transition: all 0.25s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-outline:hover { background: var(--maroon); color: var(--white); }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+    background: var(--maroon-dark);
+  }
+  .hero-pattern {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(196,154,69,0.08) 0, rgba(196,154,69,0.08) 1px, transparent 0, transparent 50%),
+      repeating-linear-gradient(-45deg, rgba(196,154,69,0.08) 0, rgba(196,154,69,0.08) 1px, transparent 0, transparent 50%);
+    background-size: 30px 30px;
+  }
+  .hero-ornament {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(420px, 80%);
+    display: flex; flex-direction: column; align-items: center; gap: 24px;
+    text-align: center;
+  }
+  .hero-mandala {
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    border: 1px solid rgba(196,154,69,0.4);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    animation: rotateSlow 30s linear infinite;
+  }
+  .hero-mandala::before {
+    content: ''; position: absolute; inset: 12px;
+    border-radius: 50%; border: 1px solid rgba(196,154,69,0.25);
+  }
+  .hero-mandala::after {
+    content: ''; position: absolute; inset: 24px;
+    border-radius: 50%; border: 1px solid rgba(196,154,69,0.15);
+  }
+  @keyframes rotateSlow { to { transform: rotate(360deg); } }
+  .hero-mandala-inner {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; color: var(--gold); line-height: 1;
+  }
+  .hero-float-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-style: italic; font-weight: 300;
+    color: rgba(232,201,122,0.85); letter-spacing: 1px;
+  }
+  .hero-dots {
+    display: flex; gap: 8px;
+  }
+  .hero-dots span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold); opacity: 0.4;
+  }
+  .hero-dots span:nth-child(2) { opacity: 0.7; }
+  .hero-dots span:nth-child(3) { opacity: 1; }
+  .hero-badge {
+    position: absolute; bottom: 40px; right: 40px;
+    width: 90px; height: 90px; border-radius: 50%;
+    border: 1px solid rgba(196,154,69,0.5);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold-light);
+    text-align: center;
+  }
+  .hero-badge .big { font-size: 24px; font-weight: 500; line-height: 1; }
+  .hero-badge .small { font-size: 10px; letter-spacing: 1px; opacity: 0.7; margin-top: 2px; }
+
+  /* ── MARQUEE ─────────────────────────────────────── */
+  .marquee-wrap {
+    background: var(--maroon); padding: 14px 0;
+    overflow: hidden; border-top: 1px solid rgba(196,154,69,0.3);
+    border-bottom: 1px solid rgba(196,154,69,0.3);
+  }
+  .marquee-track {
+    display: flex; gap: 0; white-space: nowrap;
+    animation: marquee 25s linear infinite;
+  }
+  .marquee-track span {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(232,201,122,0.85); padding: 0 32px;
+  }
+  .marquee-track .dot { color: var(--gold); }
+  .marquee-link {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(232,201,122,0.85); padding: 0 32px;
+    text-decoration: none; cursor: pointer;
+    transition: color 0.2s, letter-spacing 0.2s;
+    white-space: nowrap;
+  }
+  .marquee-link:hover {
+    color: var(--gold-light);
+    letter-spacing: 4px;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── SECTION COMMON ─────────────────────────────── */
+  section { padding: 100px 8vw; }
+  .section-tag {
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold-dark); display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .section-tag::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 60px); font-weight: 300;
+    color: var(--maroon-dark); line-height: 1.1; margin-bottom: 16px;
+  }
+  .section-title em { font-style: italic; color: var(--gold-dark); }
+  .section-desc {
+    font-size: 14px; color: var(--text-mid); line-height: 1.9;
+    max-width: 520px; font-weight: 300;
+  }
+  .divider {
+    width: 60px; height: 1px; background: var(--gold); margin: 24px 0;
+  }
+
+  /* ── CATEGORIES ──────────────────────────────────── */
+  .categories { background: var(--white); }
+  .categories-header { margin-bottom: 60px; }
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .cat-card {
+    position: relative; overflow: hidden;
+    cursor: pointer; group: true;
+    border: 1px solid var(--border);
+    transition: transform 0.3s, box-shadow 0.3s;
+    background: var(--cream);
+  }
+  .cat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(107,26,42,0.12); }
+  .cat-card.featured { grid-column: span 2; }
+  .cat-visual {
+    height: 260px; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .cat-card.featured .cat-visual { height: 340px; }
+  .cat-bg { position: absolute; inset: 0; }
+  .cat-bg-1 { background: linear-gradient(135deg, #2d0a12 0%, #6B1A2A 50%, #9B3548 100%); }
+  .cat-bg-2 { background: linear-gradient(135deg, #1a0d00 0%, #3D2000 50%, #7A4A00 100%); }
+  .cat-bg-3 { background: linear-gradient(135deg, #0a1a2d 0%, #1A3A6B 50%, #2A5A9B 100%); }
+  .cat-bg-4 { background: linear-gradient(135deg, #0a1a12 0%, #1A4A2A 50%, #2A7A4A 100%); }
+  .cat-bg-5 { background: linear-gradient(135deg, #1a1000 0%, #3D2800 50%, #7A5500 100%); }
+  .cat-pattern {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .cat-icon {
+    position: relative; z-index: 1;
+    font-size: 64px; line-height: 1;
+    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.4));
+  }
+  .cat-card.featured .cat-icon { font-size: 80px; }
+
+  /* ── CARD IMAGES ─────────────────────────────────── */
+  /* When a real photo is placed, it fills the visual area */
+  .cat-visual .card-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    z-index: 2;
+    transition: transform 0.4s ease;
+  }
+  .cat-card:hover .card-img { transform: scale(1.04); }
+
+  /* Dim the gradient behind the image slightly so text overlays work */
+  .cat-visual .card-img + .cat-icon { display: none; }
+
+  /* Product card images */
+  .prod-img .card-img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    position: absolute; inset: 0;
+  }
+  .prod-img { position: relative; overflow: hidden; }
+
+  /* Hero right image */
+  .hero-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    z-index: 1; opacity: 0.45;
+  }
+  .cat-ring {
+    position: absolute; z-index: 0;
+    width: 160px; height: 160px; border-radius: 50%;
+    border: 1px solid rgba(196,154,69,0.2);
+  }
+  .cat-ring-2 {
+    position: absolute; z-index: 0;
+    width: 120px; height: 120px; border-radius: 50%;
+    border: 1px solid rgba(196,154,69,0.15);
+  }
+  .cat-info { padding: 24px 28px; }
+  .cat-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 500; color: var(--maroon-dark);
+    margin-bottom: 6px;
+  }
+  .cat-desc { font-size: 12px; color: var(--text-light); line-height: 1.7; font-weight: 300; }
+  .cat-arrow {
+    display: inline-block; margin-top: 12px;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold-dark); text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .cat-arrow::after { content: ' →'; }
+  .cat-card:hover .cat-arrow { letter-spacing: 3px; }
+
+  /* ── STORY ─────────────────────────────────────── */
+  .story {
+    background: var(--cream-2);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center;
+  }
+  .story-right { position: relative; }
+  .story-frame {
+    border: 1px solid var(--border); padding: 48px;
+    position: relative;
+    background: var(--white);
+  }
+  .story-frame::before {
+    content: ''; position: absolute; inset: -8px;
+    border: 1px solid rgba(196,154,69,0.15);
+    pointer-events: none;
+  }
+  .story-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-style: italic; font-weight: 300;
+    color: var(--maroon); line-height: 1.7; margin-bottom: 24px;
+  }
+  .story-quote::before { content: '"'; font-size: 48px; color: var(--gold); line-height: 0; vertical-align: -18px; margin-right: 4px; }
+  .story-sig {
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-light);
+  }
+  .story-values {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    margin-top: 48px;
+  }
+  .val-item {
+    padding: 20px; border: 1px solid var(--border);
+    background: var(--white);
+  }
+  .val-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 300; color: var(--gold);
+    line-height: 1;
+  }
+  .val-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-mid); margin-top: 4px; }
+
+  /* ── FEATURED PRODUCTS ───────────────────────────── */
+  .products { background: var(--white); }
+  .products-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 60px; flex-wrap: wrap; gap: 20px;
+  }
+  .prod-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .prod-card {
+    border: 1px solid var(--border); overflow: hidden;
+    transition: transform 0.3s; cursor: pointer;
+    background: var(--cream);
+  }
+  .prod-card:hover { transform: translateY(-3px); }
+  .prod-img {
+    height: 200px; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    font-size: 52px;
+  }
+  .prod-body { padding: 20px; }
+  .prod-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; font-weight: 500; color: var(--maroon-dark);
+    margin-bottom: 4px;
+  }
+  .prod-type { font-size: 11px; letter-spacing: 1px; color: var(--text-light); margin-bottom: 10px; }
+  .prod-price {
+    font-size: 16px; font-weight: 500; color: var(--gold-dark);
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .prod-badge {
+    display: inline-block; padding: 3px 10px;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    background: var(--maroon); color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  /* ── PROCESS ─────────────────────────────────────── */
+  .process {
+    background: var(--maroon-dark);
+    text-align: center;
+  }
+  .process .section-tag { justify-content: center; }
+  .process .section-tag::before { display: none; }
+  .process .section-title { color: var(--cream); }
+  .process .divider { margin: 24px auto; }
+  .process .section-desc { color: rgba(250,246,240,0.65); margin: 0 auto 60px; }
+  .proc-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    position: relative;
+  }
+  .proc-steps::before {
+    content: ''; position: absolute;
+    top: 36px; left: calc(12.5% + 16px); right: calc(12.5% + 16px);
+    height: 1px; background: rgba(196,154,69,0.3);
+  }
+  .proc-step { padding: 0 20px; }
+  .proc-num {
+    width: 72px; height: 72px; border-radius: 50%;
+    border: 1px solid rgba(196,154,69,0.4);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; color: var(--gold);
+    background: var(--maroon-dark);
+    position: relative; z-index: 1;
+  }
+  .proc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 500; color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .proc-desc { font-size: 13px; color: rgba(250,246,240,0.55); line-height: 1.7; font-weight: 300; }
+
+  /* ── TESTIMONIALS ────────────────────────────────── */
+  .testimonials { background: var(--cream-2); }
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    margin-top: 60px;
+  }
+  .testi-card {
+    padding: 36px; background: var(--white); border: 1px solid var(--border);
+    position: relative;
+  }
+  .testi-stars {
+    color: var(--gold); font-size: 14px; margin-bottom: 16px; letter-spacing: 2px;
+  }
+  .testi-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px; font-style: italic; font-weight: 300;
+    color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;
+  }
+  .testi-name { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--maroon); }
+  .testi-loc { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+
+  /* ── CONTACT ─────────────────────────────────────── */
+  .contact {
+    background: var(--white);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); }
+  .form-group input, .form-group select, .form-group textarea {
+    padding: 12px 16px; border: 1px solid var(--border);
+    background: var(--cream); font-family: 'Jost', sans-serif;
+    font-size: 14px; color: var(--text-dark); outline: none;
+    transition: border-color 0.2s; resize: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 32px; }
+  .info-block {}
+  .info-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 8px; }
+  .info-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; color: var(--maroon-dark); line-height: 1.5;
+  }
+  .social-links { display: flex; gap: 16px; margin-top: 8px; }
+  .social-links a {
+    width: 40px; height: 40px; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-mid); text-decoration: none; font-size: 18px;
+    transition: all 0.2s;
+  }
+  .social-links a:hover { border-color: var(--maroon); color: var(--maroon); }
+
+  /* ── FOOTER ──────────────────────────────────────── */
+  footer {
+    background: var(--maroon-dark); padding: 60px 8vw 30px;
+    color: rgba(250,246,240,0.6);
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+    padding-bottom: 48px; border-bottom: 1px solid rgba(196,154,69,0.15);
+    margin-bottom: 32px;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px; font-weight: 400; letter-spacing: 4px;
+    color: var(--cream); margin-bottom: 12px;
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-tagline { font-size: 13px; line-height: 1.7; font-weight: 300; max-width: 240px; }
+  .footer-col h4 { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 20px; font-weight: 400; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { color: rgba(250,246,240,0.55); font-size: 13px; text-decoration: none; transition: color 0.2s; font-weight: 300; }
+  .footer-col ul a:hover { color: var(--gold-light); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-bottom p { font-size: 12px; }
+  .footer-bottom .heart { color: var(--gold); }
+
+  /* ── ANIMATIONS ──────────────────────────────────── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE ──────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .prod-grid { grid-template-columns: repeat(2, 1fr); }
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .cat-card.featured { grid-column: span 2; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .story { grid-template-columns: 1fr; }
+    .contact { grid-template-columns: 1fr; }
+    .proc-steps { grid-template-columns: 1fr 1fr; }
+    .proc-steps::before { display: none; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .cat-grid { grid-template-columns: 1fr; }
+    .cat-card.featured { grid-column: span 1; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .footer-top { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .story-values { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    section { padding: 70px 5vw; }
+    .proc-steps { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Uma<span>laya</span></a>
+  <ul class="nav-links">
+    <li class="nav-dropdown">
+      <a href="#categories" class="nav-dropdown-trigger">Collections <span class="nav-chevron">▾</span></a>
+      <div class="dropdown-menu">
+        <div class="dropdown-inner">
+          <!-- Jewellery -->
+<div class="dropdown-col">
+  <p class="dropdown-heading">Jewellery</p>
+
+  <a href="#categories" class="dropdown-item">
+    <span class="di-icon">✨</span>
+    <span class="di-text">
+      <span class="di-name">One Gram Jewellery</span>
+      <span class="di-sub">Elegant traditional designs</span>
+    </span>
+  </a>
+
+  <a href="#categories" class="dropdown-item">
+    <span class="di-icon">💎</span>
+    <span class="di-text">
+      <span class="di-name">Panchaloha</span>
+      <span class="di-sub">Sacred handcrafted jewellery</span>
+    </span>
+  </a>
+</div>
+
+<!-- Thread Works -->
+<div class="dropdown-divider"></div>
+
+<div class="dropdown-col">
+  <p class="dropdown-heading">Thread Works</p>
+
+  <a href="#categories" class="dropdown-item">
+    <span class="di-icon">🪬</span>
+    <span class="di-text">
+      <span class="di-name">Bangles</span>
+      <span class="di-sub">Custom thread bangles</span>
+    </span>
+  </a>
+</div>
+
+<!-- Handmade -->
+<div class="dropdown-divider"></div>
+
+<div class="dropdown-col">
+  <p class="dropdown-heading">Handmade</p>
+
+  <a href="#categories" class="dropdown-item">
+    <span class="di-icon">💍</span>
+    <span class="di-text">
+      <span class="di-name">Ear Rings</span>
+      <span class="di-sub">Handcrafted earrings</span>
+    </span>
+  </a>
+
+  <a href="#categories" class="dropdown-item">
+    <span class="di-icon">🌸</span>
+    <span class="di-text">
+      <span class="di-name">Hair Clips</span>
+      <span class="di-sub">Centre clips, alligators & TikTok styles</span>
+    </span>
+  </a>
+
+  <a href="#categories" class="dropdown-item">
+    <span class="di-icon">🧶</span>
+    <span class="di-text">
+      <span class="di-name">Woollen Garlands</span>
+      <span class="di-sub">Handmade decorative garlands</span>
+    </span>
+  </a>
+</div>
+
+<!-- Sarees -->
+<div class="dropdown-divider"></div>
+
+<div class="dropdown-col">
+  <p class="dropdown-heading">Sarees</p>
+
+  <a href="#categories" class="dropdown-item">
+    <span class="di-icon">🌿</span>
+    <span class="di-text">
+      <span class="di-name">Block Printing</span>
+      <span class="di-sub">Custom saree block prints</span>
+    </span>
+  </a>
+
+  <a href="#categories" class="dropdown-item">
+    <span class="di-icon">🥻</span>
+    <span class="di-text">
+      <span class="di-name">Pre-Pleating</span>
+      <span class="di-sub">Ready-to-wear saree pleating</span>
+    </span>
+  </a>
+</div>
+        </div>
+      </div>
+    </li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#products">Featured</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Enquire Now</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Handcrafted · Authentic · Timeless</div>
+    <h1 class="hero-title">Where<br>Craft Meets<br><em>Tradition</em></h1>
+    <p class="hero-sub">Handmade adornments rooted in Telugu artistry</p>
+    <p class="hero-desc">From delicate thread bangles and jaada billallu to block-printed sarees and panchaloha jewellery — each piece at Umalaya is made with care, love and the wisdom of generations.</p>
+    <div class="hero-btns">
+      <a href="#categories" class="btn-primary">Explore Collections</a>
+      <a href="#story" class="btn-outline">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-pattern"></div>
+    <img src="images/hero-banner.jpg" alt="Umalaya" class="hero-img" onerror="this.style.display='none'">
+    <div class="hero-ornament">
+      <div class="hero-mandala">
+        <div class="hero-mandala-inner">🌸</div>
+      </div>
+      <p class="hero-float-text">Crafted with devotion,<br>worn with pride</p>
+      <div class="hero-dots"><span></span><span></span><span></span></div>
+    </div>
+    <div class="hero-badge">
+      <span class="big">100%</span>
+      <span class="small">Hand-<br>made</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <a href="#cat-threadworks" class="marquee-link">Thread Bangles</a><span class="dot">✦</span>
+    <a href="#cat-handmade" class="marquee-link">Hair Clips</a><span class="dot">✦</span>
+    <a href="#cat-handmade" class="marquee-link">Jaada Billallu</a><span class="dot">✦</span>
+    <a href="#cat-handmade" class="marquee-link">Ear Rings</a><span class="dot">✦</span>
+    <a href="#cat-sarees" class="marquee-link">Block Print Sarees</a><span class="dot">✦</span>
+    <a href="#cat-sarees" class="marquee-link">Pre-pleated Sarees</a><span class="dot">✦</span>
+    <a href="#cat-jewellery" class="marquee-link">Panchaloha Jewellery</a><span class="dot">✦</span>
+    <a href="#cat-jewellery" class="marquee-link">One Gram Gold</a><span class="dot">✦</span>
+    <a href="#cat-threadworks" class="marquee-link">Thread Bangles</a><span class="dot">✦</span>
+    <a href="#cat-handmade" class="marquee-link">Hair Clips</a><span class="dot">✦</span>
+    <a href="#cat-handmade" class="marquee-link">Jaada Billallu</a><span class="dot">✦</span>
+    <a href="#cat-handmade" class="marquee-link">Ear Rings</a><span class="dot">✦</span>
+    <a href="#cat-sarees" class="marquee-link">Block Print Sarees</a><span class="dot">✦</span>
+    <a href="#cat-sarees" class="marquee-link">Pre-pleated Sarees</a><span class="dot">✦</span>
+    <a href="#cat-jewellery" class="marquee-link">Panchaloha Jewellery</a><span class="dot">✦</span>
+    <a href="#cat-jewellery" class="marquee-link">One Gram Gold</a><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="categories-header">
+    <div class="section-tag">Our Collections</div>
+    <h2 class="section-title">Handcrafted with<br><em>Every Thread</em></h2>
+    <div class="divider"></div>
+    <p class="section-desc">Each category celebrates a different facet of Indian artisanal tradition — made in small batches, never mass-produced.</p>
+  </div>
+  <div class="cat-grid">
+
+    
+
+    <div class="cat-card fade-up" id="cat-bangles">
+      <div class="cat-visual">
+        <div class="cat-bg cat-bg-2"></div>
+        <div class="cat-pattern"></div>
+
+        <div class="cat-icon">🪬</div>
+      </div>
+      <div class="cat-info" id="cat-threadworks">
+        <div class="cat-name">Thread Bangles</div>
+        <p class="cat-desc">Vibrant hand-wound thread bangles in sets of four, twelve, or twenty-four. Every colour, every festival.</p>
+        <a href="#contact" class="cat-arrow">Shop Now</a>
+      </div>
+    </div>
+
+    <div class="cat-card fade-up" id="cat-jaada">
+      <div class="cat-visual">
+        <div class="cat-bg cat-bg-3"></div>
+        <div class="cat-pattern"></div>
+
+        <div class="cat-icon">🪡</div>
+      </div>
+      <div class="cat-info" id="cat-handmade">
+        <div class="cat-name">Jaada Billallu</div>
+        <p class="cat-desc">Traditional hair ornaments — the quintessential Telugu bridal accessory, crafted to adorn the most auspicious moments.</p>
+        <a href="#contact" class="cat-arrow">Explore</a>
+      </div>
+    </div>
+
+    <div class="cat-card fade-up" id="cat-garlands">
+      <div class="cat-visual">
+        <div class="cat-bg cat-bg-3"></div>
+        <div class="cat-pattern"></div>
+
+        <div class="cat-icon">🧶</div>
+      </div>
+      <div class="cat-info" id="cat-handmade">
+        <div class="cat-name">Woollen Garlands</div>
+        <p class="cat-desc">Traditional home decor with year of tradition and a mordern touch.</p>
+        <a href="#contact" class="cat-arrow">Explore</a>
+      </div>
+    </div>
+
+    <div class="cat-card fade-up" id="cat-hairclips">
+      <div class="cat-visual">
+        <div class="cat-bg cat-bg-1" style="filter:hue-rotate(40deg)"></div>
+        <div class="cat-pattern"></div>
+
+        <div class="cat-icon">✨</div>
+      </div>
+      <div class="cat-info" id="cat-handmade">
+        <div class="cat-name">Hair Clips & Accessories</div>
+        <p class="cat-desc">Hand-threaded hair clips and pins — whimsical, wearable art for everyday elegance.</p>
+        <a href="#contact" class="cat-arrow">Browse</a>
+      </div>
+    </div>
+
+    <div class="cat-card fade-up" id="cat-earrings">
+      <div class="cat-visual">
+        <div class="cat-bg cat-bg-2" style="filter:hue-rotate(-30deg)"></div>
+        <div class="cat-pattern"></div>
+
+        <div class="cat-icon">💍</div>
+      </div>
+      <div class="cat-info" id="cat-handmade">
+        <div class="cat-name">Ear Rings</div>
+        <p class="cat-desc">Statement jhumkas, chandbalis, and thread earrings — handcrafted with beads, mirrors, and love.</p>
+        <a href="#contact" class="cat-arrow">View</a>
+      </div>
+    </div>
+
+    <div class="cat-card featured fade-up" id="cat-jewellery">
+      <div class="cat-visual">
+        <div class="cat-bg cat-bg-1"></div>
+        <div class="cat-pattern"></div>
+
+        <div class="cat-ring"></div>
+        <div class="cat-ring-2"></div>
+        <div class="cat-icon">💎</div>
+      </div>
+      <div class="cat-info">
+        <div class="cat-name">Panchaloha Jewellery<br>One Gram Gold Jewellery</div>
+        <p class="cat-desc">Sacred five-metal alloy pieces alongside exquisite one-gram gold jewellery — timeless designs for every occasion, from daily wear to weddings.</p>
+        <a href="#contact" class="cat-arrow">View Collection</a>
+      </div>
+    </div>
+
+    <div class="cat-card fade-up" id="cat-blockprint">
+      <div class="cat-visual">
+        <div class="cat-bg cat-bg-4"></div>
+        <div class="cat-pattern"></div>
+
+        <div class="cat-icon">🌿</div>
+      </div>
+      <div class="cat-info" id="cat-sarees">
+        <div class="cat-name">Block Print Sarees</div>
+        <p class="cat-desc">Handmade wooden block prints pressed onto fine fabric — bold patterns rooted in centuries-old Indian textile craft.</p>
+        <a href="#contact" class="cat-arrow">Discover</a>
+      </div>
+    </div>
+
+    <div class="cat-card fade-up" id="cat-prepleated">
+      <div class="cat-visual">
+        <div class="cat-bg cat-bg-5"></div>
+        <div class="cat-pattern"></div>
+
+        <div class="cat-icon">🥻</div>
+      </div>
+      <div class="cat-info" id="cat-sarees">
+        <div class="cat-name">Pre-pleated Sarees</div>
+        <p class="cat-desc">Ready-to-wear sarees, pre-pleated for effortless draping — the modern woman's heirloom garment.</p>
+        <a href="#contact" class="cat-arrow">Shop</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="story-left">
+    <div class="section-tag">Our Story</div>
+    <h2 class="section-title">Born from<br><em>Passion & Thread</em></h2>
+    <div class="divider"></div>
+    <p class="section-desc" style="margin-bottom: 24px;">Umalaya began as a small home studio with a single roll of thread and a dream to keep traditional Telugu craft alive. Every piece we make honours the artisan in all of us.</p>
+    <p class="section-desc">We source our raw materials, work with locals, and ensure that each product reaching you carries the warmth of handmade authenticity. No machines. No shortcuts. Only craft.</p>
+    <div class="story-values">
+      <div class="val-item">
+        <div class="val-num">500+</div>
+        <div class="val-label">Happy Customers</div>
+      </div>
+      <div class="val-item">
+        <div class="val-num">8</div>
+        <div class="val-label">Product Lines</div>
+      </div>
+      <div class="val-item">
+        <div class="val-num">100%</div>
+        <div class="val-label">Handmade</div>
+      </div>
+      <div class="val-item">
+        <div class="val-num">∞</div>
+        <div class="val-label">Love & Care</div>
+      </div>
+    </div>
+  </div>
+  <div class="story-right">
+    <div class="story-frame">
+      <p class="story-quote">Every bangle I wind, every saree I press — I pour a little of myself into it. That is the only way I know how to make things.</p>
+      <p class="story-sig">— Founder, Umalaya</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="section-tag">How We Work</div>
+  <h2 class="section-title">Made by Hand,<br><em>Made with Heart</em></h2>
+  <div class="divider"></div>
+  <p class="section-desc">Every Umalaya piece follows a time-honoured process that ensures quality and soul in equal measure.</p>
+  <div class="proc-steps">
+    <div class="proc-step fade-up">
+      <div class="proc-num">01</div>
+      <div class="proc-title">Source</div>
+      <p class="proc-desc">We select the finest threads, metals, and fabrics from trusted artisan suppliers.</p>
+    </div>
+    <div class="proc-step fade-up">
+      <div class="proc-num">02</div>
+      <div class="proc-title">Design</div>
+      <p class="proc-desc">Each pattern and colour palette is sketched by hand - drawing from traditional motifs and modern taste - or ordered by our Customers</p>
+    </div>
+    <div class="proc-step fade-up">
+      <div class="proc-num">03</div>
+      <div class="proc-title">Craft</div>
+      <p class="proc-desc">Skilled hands wind, weave, press and set — every step done with patience and precision.</p>
+    </div>
+    <div class="proc-step fade-up">
+      <div class="proc-num">04</div>
+      <div class="proc-title">Deliver</div>
+      <p class="proc-desc">Packed with care and shipped to your doorstep, ready to wear and cherish forever.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-tag">What They Say</div>
+  <h2 class="section-title">Loved by<br><em>Our Customers</em></h2>
+  <div class="testi-grid">
+    <div class="testi-card fade-up">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">The thread bangles are absolutely gorgeous. I ordered a custom colour set for my daughter's half saree ceremony and they were perfect. Will definitely order again!</p>
+      <p class="testi-name">Padmavathi R.</p>
+      <p class="testi-loc">Hyderabad</p>
+    </div>
+    <div class="testi-card fade-up">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">The pre-pleated saree saved me so much time at the wedding. It looked stunning and everyone kept asking where I got it. Umalaya is a gem!</p>
+      <p class="testi-name">Kavitha S.</p>
+      <p class="testi-loc">Vijayawada</p>
+    </div>
+    <div class="testi-card fade-up">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">Ordered the panchaloha pendant for my mother and she absolutely loves it. The quality and finish are exceptional for the price. Highly recommended.</p>
+      <p class="testi-name">Ramesh N.</p>
+      <p class="testi-loc">Warangal</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div>
+    <div class="section-tag">Get in Touch</div>
+    <h2 class="section-title">Order, Enquire<br><em>or Customise</em></h2>
+    <div class="divider"></div>
+    <p class="section-desc" style="margin-bottom: 48px;">We love custom orders! Whether it's a specific colour, size, or a complete bridal set — just tell us what you have in mind.</p>
+
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input id="name" type="text" placeholder="Laxmi" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone / WhatsApp</label>
+          <input id="phone" type="tel" placeholder="+91 99999 9999" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="category">I'm Interested In</label>
+        <select id="category">
+          <option value="">Select a category…</option>
+          <option>Thread Bangles</option>
+          <option>Hair Clips</option>
+          <option>Jaada Billallu</option>
+          <option>Ear Rings</option>
+          <option>Block Print Sarees</option>
+          <option>Pre-pleated Sarees</option>
+          <option>Panchaloha Jewellery</option>
+          <option>One Gram Gold Jewellery</option>
+          <option>Woolen Garlands</option>
+          <option>Bridal / Combo Set</option>
+          <option>Custom Order</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Your Message</label>
+        <textarea id="message" rows="4" placeholder="Tell us about your requirements — colours, quantities, occasions…"></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="align-self: flex-start;">
+        <span style="display:flex;align-items:center;gap:10px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.564 4.14 1.544 5.875L0 24l6.347-1.506A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.017-1.376l-.36-.213-3.767.893.952-3.653-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
+          Send via WhatsApp
+        </span>
+      </button>
+    </form>
+    <p id="form-success" style="display:none;margin-top:16px;color:var(--maroon);font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;">
+      Opening WhatsApp… we'll reply shortly! 🌸
+    </p>
+  </div>
+
+  <div class="contact-info">
+    <div class="info-block">
+      <div class="info-label">Call / WhatsApp</div>
+      <div class="info-value">+91 63024 71174<br>+91 </div>
+    </div>
+    <div class="info-block">
+      <div class="info-label">Based In</div>
+      <div class="info-value">Hyderabad, Telangana<br><s>Delivering across India</s><br>(Coming Soon)</div>
+    </div>
+    <div class="info-block">
+      <div class="info-label">Business Hours</div>
+      <div class="info-value">Mon – Sat · 9 AM to 7 PM</div>
+    </div>
+    <div class="info-block">
+      <div class="info-label">Follow Our Journey</div>
+      <div class="social-links">
+        <a href="#" title="Instagram">📸</a>
+        <a href="#" title="Facebook">📘</a>
+        <a href="#" title="WhatsApp">💬</a>
+        <a href="#" title="YouTube">▶️</a>
+      </div>
+    </div>
+    <div style="padding: 32px; border: 1px solid var(--border); background: var(--cream-2);">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--maroon);line-height:1.7;">
+        "We accept bulk orders for weddings, functions and gifting. Custom combinations welcome."
+      </p>
+      <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-top:12px;">— Umalaya Promise</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Uma<span>laya</span></div>
+      <p class="footer-tagline">Where tradition meets creativity</p>
+    </div>
+    <div class="footer-col">
+      <h4>Collections</h4>
+      <ul>
+        <h7>Thread Works</h7>
+          <ul>
+            <li><a href="#categories">Thread Works</a></li>
+          </ul>
+        <h7>Handmade</h7>
+          <ul>
+            <li><a herf="#categories">Ear Rings</a></li>
+            <li><a herf="#categories">Hair Clips</a></li>
+            <li><a herf="#categories">Wollen Garlands</a></li>
+            <li><a herf="#categories">Jada Billallu</a></li>
+          </ul>
+        <h7>Jewellery</h7>
+        <ul>
+          <li><a herf="#categories">Block Printing</a></li>
+          <li><a herf="#categories">Pre-Pleatting</a></li>
+        </ul>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#contact">Custom Orders</a></li>
+        <li><a href="#contact">Bulk / Gifting</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Umalaya. All rights reserved. Made with <span class="heart">♥</span> in Hyderabad.</p>
+    <p>Handcrafted · Authentic · Delivered with Love</p>
+  </div>
+</footer>
+
+<script src="images.js"></script>
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const name     = document.getElementById('name').value.trim();
+    const phone    = document.getElementById('phone').value.trim();
+    const category = document.getElementById('category').value || 'Not specified';
+    const message  = document.getElementById('message').value.trim();
+
+    const whatsappMessage =
+`🌸 *New Umalaya Enquiry* 🌸
+
+👤 Name: ${name}
+📞 Phone: ${phone}
+🛍 Interested In: ${category}
+
+📝 Message:
+${message || '(no message added)'}
+
+— Sent via Umalaya Website`;
+
+    const whatsappURL = `https://wa.me/916302471174?text=${encodeURIComponent(whatsappMessage)}`;
+
+    // Show success note then open WhatsApp
+    const form = e.target;
+    form.style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+    window.open(whatsappURL, '_blank');
+  }
+
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    if (links.style.display === 'flex') {
+      links.style.display = 'none';
+    } else {
+      links.style.display = 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'fixed';
+      links.style.top = '70px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = 'var(--white)';
+      links.style.padding = '24px 5vw';
+      links.style.borderBottom = '1px solid var(--border)';
+      links.style.gap = '20px';
+    }
+  }
+</script>
+</body>
+</html>
